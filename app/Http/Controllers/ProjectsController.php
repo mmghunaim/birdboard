@@ -10,6 +10,7 @@ class ProjectsController extends Controller
     {
         // $projects= Project::all();
         $projects = auth()->user()->projects;
+        // ->skip(2)->take(3);
 
         return view('projects.index', ['projects'=> $projects]);
     }

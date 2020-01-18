@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>BirdBoard</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
-</head>
+@extends('layouts.app')
+
+@section('content')
 <body>
-    <form method="POST" action="/projects" class="container" style="padding-top: 40px">
+    <form method="POST" action="/projects">
         @csrf
         <h1 class="heading is-1">Create a Project</h1>
         <div class="field">
@@ -27,9 +24,10 @@
         <div class="field">
             <div class="control">
                 <button type="submit" class="button is-link">Create a Projet</button>
+                <a href="/projects">Cancel</a>
             </div>
         </div>
 
     </form>
 </body>
-</html>
+@endsection   
