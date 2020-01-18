@@ -14,6 +14,18 @@ h3 {
 a {
   @apply text-blue-600 underline;
 }
+
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+.button {
+    @apply bg-blue-100;
+    @apply text-white;
+    @apply no-underline;
+    @apply rounded-lg;
+    @apply text-sm;
+    @apply py-2;
+    @apply px-5;
+box-shadow: 0 2px 7px 0 #b0eaff;
+}
