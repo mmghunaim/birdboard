@@ -4,12 +4,15 @@
 @import "tailwindcss/base";
 h1 {
   @apply text-2xl;
+  @apply font-bold;
 }
 h2 {
   @apply text-xl;
+  @apply font-medium;
 }
 h3 {
   @apply text-lg;
+  @apply font-medium;
 }
 a {
   @apply text-blue-600 underline;
@@ -28,4 +31,11 @@ a {
     @apply py-2;
     @apply px-5;
 box-shadow: 0 2px 7px 0 #b0eaff;
+}
+
+.card{
+  @apply bg-white;
+  @apply p-5;
+  @apply rounded-lg;
+  @apply shadow;
 }
