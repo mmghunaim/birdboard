@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Project;
 use Tests\TestCase;
+use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -26,8 +27,8 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
+
         $this->get('projects/create')->assertStatus(200);
 
         $attributes=[
@@ -59,26 +60,32 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_update_a_project()
     {
-        $this->signIn();
+        // $this->signIn();
 
-        $project= factory('App\Project')->create(['owner_id'=> auth()->id()]);
+        // $project= factory('App\Project')->create(['owner_id'=> auth()->id()]);
 
-        $this->patch($project->path(), [
-            'notes'=> 'new notes'
-        ])->assertRedirect($project->path());
+        $project = ProjectFactory::create();
 
-        $this->assertDatabaseHas('projects', ['notes'=>'new notes']);
+        $this->actingAs($project->owner)
+            ->patch($project->path(), $atts = [
+                'notes'=> 'new notes'
+            ])
+            ->assertRedirect($project->path());
+
+        $this->assertDatabaseHas('projects', $atts);
     }
 
     
     /** @test **/
     public function a_user_can_view_their_project()
     {
-        $this->signIn();
+        // $this->signIn();
 
-        $project= factory('App\Project')->create(['owner_id'=> auth()->id()]);
+        // $project= factory('App\Project')->create(['owner_id'=> auth()->id()]);
 
-        $this->get($project->path())->assertSee($project->title);
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->owner)->get($project->path())->assertSee($project->title);
     }
 
     /** @test **/
