@@ -17,8 +17,8 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
-        abort_if(auth()->user()->isNot($project->owner), 403);
-
+        // abort_if(auth()->user()->isNot($project->owner), 403);
+        $this->authorize('update', $project);
         return view('projects.show',['project'=> $project]);
     }
 
@@ -43,13 +43,8 @@ class ProjectsController extends Controller
 
     public function update(Project $project)
     {
-        abort_if(auth()->user()->isNot($project->owner), 403);
-
-        // request()->validate([
-        // ]);
-        $project->update([
-            'notes'=> request('notes')
-        ]);
+        $this->authorize('update', $project);
+        $project->update(request(['notes']));
 
         return redirect($project->path());
     }
