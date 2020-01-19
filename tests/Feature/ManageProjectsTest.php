@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Project;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManageProjectsTest extends TestCase
 {
@@ -26,35 +27,50 @@ class ManageProjectsTest extends TestCase
     public function a_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs(factory('App\User')->create());
-
+        $this->signIn();
+        $this->get('projects/create')->assertStatus(200);
 
         $attributes=[
             'title'=> $this->faker->sentence,
-            'description'=> $this->faker->paragraph
+            'description'=> $this->faker->sentence,
+            'notes'=> 'General notes here.'
         ];
 
-        $this->get('projects/create')->assertStatus(200);
+        // $project= auth()->user()->projects()->create(factory('App\Project')->raw());
         // $attributes= factory('App\\Project')->raw();
 
-        $this->post('/projects',$attributes)->assertRedirect('/projects');
+        $response= $this->post('/projects',$attributes);
+
+        $project= Project::where($attributes)->first();
+
+        $response->assertRedirect($project->path());
+
+        // $this->post('/projects',$project->toArray())->assertRedirect($project->path());
 
         $this->assertDatabaseHas('projects',$attributes);
 
-        $this->get('/projects')->assertSee($attributes['title']);
+        // $this->get('/projects')->assertSee($project['title']);
+        $this->get($project->path())
+        ->assertSee($project['title'])
+        ->assertSee($project['description'])
+        ->assertSee($project['notes']);
     }
 
     /** @test **/
-    public function only_the_owner_of_the_project_may_add_tasks()
+    public function a_user_can_update_a_project()
     {
+        $this->withoutExceptionHandling();
         $this->signIn();
+        $project= factory('App\Project')->create(['owner_id'=> auth()->id()]);
 
-        $project = factory('App\Project')->create();
-        $this->post($project->path() . '/tasks', ['body'=>'Test Task'])
-            ->assertStatus(403);
+        $this->patch($project->path(), [
+            'notes'=> 'new notes'
+        ])->assertRedirect($project->path());
 
-        $this->assertDatabaseMissing('tasks',['body'=> 'Test Task']);
+        $this->assertDatabaseHas('projects', ['notes'=>'new notes']);
     }
+
+    
     /** @test **/
     public function a_user_can_view_their_project()
     {

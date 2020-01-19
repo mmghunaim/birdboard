@@ -26,23 +26,45 @@
             {{-- tasks --}}
             <div class="mb-8">
                 <h2 class="text-gray-600 text-lg mb-3">Tasks</h2>
-                @forelse($project->tasks as $task)
-                    <div class="card mb-3">{{ $task->body }}</div>
-                @empty
-                    <div class="card">Add tasks now...</div>  
-                @endforelse
+                @foreach($project->tasks as $task)
+                    <div class="card mb-3">
+                        <form method="POST" action="{{ $task->path() }}">
+                            @method('PATCH')
+                            @csrf
+                            <div class="flex justify-between">
+                                <input type="text" name="body" class="w-full {{ $task->completed ? 'text-gray-600': ''}}"
+                                 value="{{ $task->body }}">
+                                <input type="checkbox" name="completed" onChange="this.form.submit()" 
+                                {{ $task->completed ? 'checked': '' }}>
+                            </div>
+                        </form>
+                        
+                    </div>
+                @endforeach
 
                 <form method="POST" action="{{ $project->path() .'/tasks' }}">
                     @csrf
                     <div class="card">
-                        <input type="text" name="body" placeholder="Add tasks now...">
+                        <input type="text" name="body" placeholder="Add tasks now..." class="w-full">
                     </div>
                 </form>
             </div>
             {{--general notes--}}
             <div>
-                <h2 class="text-gray-600 text-lg mb-3">General Notes</h2>
-                <textarea class="card w-full" style="min-height: 200px">Lorem ipsum.</textarea>
+                <h2 class="text-gray-600 text-lg mb-3" >General Notes</h2>
+                <form method="POST" action="{{ $project->path() }}">
+                    @method('PATCH')
+                    @csrf
+
+                    <textarea 
+                        name="notes" 
+                        class="card w-full mb-4" 
+                        style="min-height: 200px" 
+                        placeholder="Anything special that you want to make a note of">
+                        {{ $project->notes }}
+                    </textarea>
+                    <button type="submit" class="button">Save</button>
+                </form>
             </div>
         </div>
 

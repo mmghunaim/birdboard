@@ -27,19 +27,31 @@ class ProjectsController extends Controller
         $attributes= request()->validate(
             [
                 'title'=>'required',
-                'description'=> 'required'
+                'description'=> 'required|max:80',
+                'notes'=>'min:3|max:255'
             ]);
-
+        // dd($attributes);
         // $attributes['owner_id'] = auth()->id();
-
         $project= auth()->user()->projects()->create($attributes);
-
         return redirect($project->path());
     }
 
     public function create()
     {
         return view('projects.create');
+    }
+
+    public function update(Project $project)
+    {
+        abort_if(auth()->user()->isNot($project->owner), 403);
+
+        // request()->validate([
+        // ]);
+        $project->update([
+            'notes'=> request('notes')
+        ]);
+
+        return redirect($project->path());
     }
 
 }
