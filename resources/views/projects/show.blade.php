@@ -11,7 +11,7 @@
         </div>
 
         <div>
-            <a href="/projects/create" class="button">Create New Project</a>
+            <a href="{{ $project->path() . '/edit' }}" class="button">Edit Project</a>
         </div>
 
     </div>

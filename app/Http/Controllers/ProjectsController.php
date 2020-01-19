@@ -41,10 +41,23 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
+    public function edit(Project $project)
+    {
+        return view('projects.edit', ['project' => $project]);
+    }
+    
     public function update(Project $project)
     {
         $this->authorize('update', $project);
-        $project->update(request(['notes']));
+
+        $attributes= request()->validate(
+            [
+                'title'=>'required',
+                'description'=> 'required|max:80',
+                'notes'=>'min:3|max:255'
+            ]);
+
+        $project->update($attributes);
 
         return redirect($project->path());
     }
