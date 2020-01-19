@@ -17,10 +17,6 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
-        // if (auth()->user()->isNot($project->owner)) {
-        //     abort(403);
-        // }
-
         abort_if(auth()->user()->isNot($project->owner), 403);
 
         return view('projects.show',['project'=> $project]);
