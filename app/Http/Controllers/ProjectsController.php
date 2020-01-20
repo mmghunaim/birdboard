@@ -57,9 +57,9 @@ class ProjectsController extends Controller
     {
         return request()->validate(
             [
-                'title'=>'required',
-                'description'=> 'required|max:80',
-                'notes'=>'min:3|max:255'
+                'title'=>'sometimes|required',
+                'description'=> 'sometimes|required|max:80',
+                'notes'=>'nullable|max:255'
             ]
         );
     }
