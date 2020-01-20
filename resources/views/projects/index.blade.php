@@ -18,7 +18,7 @@
     <main class="lg:flex flex-wrap -mx-3">
         @forelse($projects as $project)
             <div class="lg:w-1/3 px-3 pb-6">
-                @include('projects.card')
+                @include('projects._card')
             </div>
         @empty
             <div class="card">No Projcets Yet.</div>
