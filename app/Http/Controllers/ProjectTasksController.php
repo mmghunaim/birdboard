@@ -16,6 +16,11 @@ class ProjectTasksController extends Controller
             'body'=> 'required'
         ]);
 
+        //There is two ways to add tasks to specific Project
+        //First one through the relation between proejct and tasks BUT we must passed an array
+        //$project->tasks()->create(request('body'));
+        
+        //Last one by use a created method
         $project->addTask(request('body'));
 
         return redirect($project->path());
@@ -26,6 +31,7 @@ class ProjectTasksController extends Controller
         $this->authorize('update', $task->project);
 
         request()->validate(['body'=> 'required']);
+        
         $task->update([
             'body'=> request('body'),
             'completed'=> request()->has('completed')

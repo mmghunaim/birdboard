@@ -54,6 +54,7 @@ class ProjectTasksTest extends TestCase
     /** @test **/
     public function a_project_can_have_tasks()
     {
+        $this->withoutExceptionHandling();
         $this->signIn();
 
         // $project= auth()->user()->projects()
@@ -79,6 +80,9 @@ class ProjectTasksTest extends TestCase
         // ->ownedBy($this->signIn())
         // ->withTasks(1)
         // ->create();
+        //OR
+        //$project = new ProjectFactory;
+        //$project =$project->ownedBy($this->signIn())->withTasks()->create();
 
         // $this->signIn();
         // $project= auth()->user()->projects()

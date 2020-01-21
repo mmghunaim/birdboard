@@ -12,6 +12,8 @@ class ProjectFactory
 
     protected $user;
 
+    //Using of Fluent APIs, What a magic is this!!
+
     public function ownedBy($user)
     {
         $this->user = $user;
@@ -28,16 +30,16 @@ class ProjectFactory
     {
 
         $project = factory(Project::class)->create([
+            // factory(User::class)->create()->id is equivalent to factory(User::class)
             'owner_id' => $this->user ?? factory(User::class)
         ]);
 
         factory(Task::class, $this->tasksCount)->create([
             'project_id' => $project->id
         ]);
-
+        
         return $project;
 
     }
 }
 
-// factory(User::class)->create()->id is equivalent to factory(User::class)

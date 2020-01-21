@@ -23,6 +23,11 @@ class ProjectsController extends Controller
         return view('projects.show',['project'=> $project]);
     }
 
+    public function create()
+    {
+        return view('projects.create');
+    }
+
     public function store()
     {
         // $attributes= $this->validateRequest();
@@ -30,11 +35,6 @@ class ProjectsController extends Controller
         // $attributes['owner_id'] = auth()->id();
         $project= auth()->user()->projects()->create($this->validateRequest());
         return redirect($project->path());
-    }
-
-    public function create()
-    {
-        return view('projects.create');
     }
 
     public function edit(Project $project)
