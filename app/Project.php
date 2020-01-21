@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Activity;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
     protected $fillable = ['title','description','owner_id','notes'];
+
     protected $guarded=[];
 
     public function path()
@@ -34,4 +36,13 @@ class Project extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function createActivity($type)
+    {
+        return Activity::create([
+            'project_id'=> $this->id,
+            'description'=> $type
+        ]);
+    }
+
 }

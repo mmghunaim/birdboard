@@ -18,6 +18,7 @@ class TaskTest extends TestCase
         $this->assertInstanceOf(Project::class, $task->project);
 
     }
+
     /** @test **/
     public function a_task_has_a_path()
     {
@@ -27,15 +28,26 @@ class TaskTest extends TestCase
         // $this->post($project->path() . '/tasks', ['body'=> 'Task Test']);
 
         // $task= $project->tasks;
-
-        $task= factory('App\Task')->create();
-
         // $this->assertEquals(
         //     '/projects/' . $task->project_id . '/tasks/' . $task->id , $task->path()
         // );
 
+        $task= factory('App\Task')->create();
+
         $this->assertEquals(
             '/projects/' . $task->project->id . '/tasks/' . $task->id , $task->path()
         );
+    }
+
+    /** @test **/
+    public function a_task_can_be_completed()
+    {
+        $task= factory('App\Task')->create();
+
+        $this->assertFalse($task->completed);
+
+        $task->complete();
+
+        $this->assertTrue($task->fresh()->completed);
     }
 }
