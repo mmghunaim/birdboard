@@ -8,7 +8,7 @@ use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class TriggeractivitiesTest extends TestCase
+class TriggertivitiesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,22 +18,39 @@ class TriggeractivitiesTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->assertCount(1, $project->activities);
-        $this->assertEquals('created_project', $project->activities[0]->description);
+
+        tap($project->activities->last(), function($activities){
+
+            $this->assertEquals('created_project', $activities->description);
+
+            $this->assertNull($activities->changes);
+
+        });
+
     }
 
     /** @test **/
     public function updating_a_project()
     {
         $project = ProjectFactory::create();
+        $originalTitle = $project->title;
 
-        {
-            // $project->update(['title' => 'changed']); OR
-
-            $this->actingAs($project->owner)->patch($project->path(), ['title'=> 'changed']);
-        }
+        $project->update(['title'=> 'changed']);
 
         $this->assertCount(2, $project->activities);
-        $this->assertEquals('updated_project', $project->activities->last()->description);
+
+        tap($project->activities->last(), function($activities) use($originalTitle){
+
+            $this->assertEquals('updated_project', $activities->description);
+
+            $expected = [
+                'before' => ['title'=> $originalTitle],
+                'after' => ['title' => 'changed']
+            ];
+
+            $this->assertEquals($expected, $activities->changes);
+
+        });
     }
 
     /** @test **/
