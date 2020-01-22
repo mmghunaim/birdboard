@@ -97,12 +97,15 @@ class TriggerActivityTest extends TestCase
         $task = $project->tasks[0];
 
         $this->assertCount(2, $project->activity);
+
         $this->assertEquals('created_task', $project->activity->last()->description);
 
         $this->actingAs($project->owner)
             ->delete($task->path(), [
                 'id' => $task->id
             ]);
+
+        $this->assertCount(3, $project->fresh()->activity);    
 
     }
     
