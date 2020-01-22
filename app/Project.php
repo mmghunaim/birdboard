@@ -32,7 +32,7 @@ class Project extends Model
         return $this->tasks()->create(compact('body'));
     }
 
-    public function activity()
+    public function activities()
     {
         return $this->hasMany(Activity::class)->latest();
     }
@@ -43,7 +43,7 @@ class Project extends Model
         //     'description'=> $description
         // ]);
 
-        $this->activity()->create(compact('description'));
+        $this->activities()->create(compact('description'));
     }
 
 }

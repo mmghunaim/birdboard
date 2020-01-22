@@ -14,7 +14,7 @@ class TaskObserver
      */
     public function created(Task $task)
     {
-        $task->project->createActivity('created_task');
+        $task->createActivity('created_task');
     }
 
     /**
@@ -26,9 +26,9 @@ class TaskObserver
     public function updated(Task $task)
     {
         if (! $task->completed) {
-            $task->project->createActivity('incompleted_task');
+            $task->createActivity('incompleted_task');
         }else{
-            $task->project->createActivity('completed_task');
+            $task->createActivity('completed_task');
         }
     }
 
@@ -40,7 +40,7 @@ class TaskObserver
      */
     public function deleted(Task $task)
     {
-        $task->project->createActivity('deleted_task');
+        $task->createActivity('deleted_task');
     }
 
     /**
