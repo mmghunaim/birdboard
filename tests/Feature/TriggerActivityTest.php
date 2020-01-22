@@ -17,7 +17,7 @@ class TriggerActivityTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->assertCount(1, $project->activity);
-        $this->assertEquals('created', $project->activity[0]->description);
+        $this->assertEquals('created_project', $project->activity[0]->description);
     }
 
     /** @test **/
@@ -32,7 +32,7 @@ class TriggerActivityTest extends TestCase
         }
 
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('updated', $project->activity->last()->description);
+        $this->assertEquals('updated_project', $project->activity->last()->description);
     }
 
     /** @test **/
@@ -96,14 +96,12 @@ class TriggerActivityTest extends TestCase
 
         $task = $project->tasks[0];
 
-        $this->assertCount(2, $project->activity);
+        // $this->actingAs($project->owner)
+        //     ->delete($task->path(), [
+        //         'id' => $task->id
+        //     ]);
 
-        $this->assertEquals('created_task', $project->activity->last()->description);
-
-        $this->actingAs($project->owner)
-            ->delete($task->path(), [
-                'id' => $task->id
-            ]);
+        $task->delete();
 
         $this->assertCount(3, $project->fresh()->activity);    
 

@@ -18,6 +18,7 @@ class Task extends Model
     // public static function boot()
     // {
     //     parent::boot(); 
+    
     //     static::created(function($task){
     //         App\Activity::create([
     //         'project_id'=> $task->project->id,
