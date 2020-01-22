@@ -1,4 +1,12 @@
 <?php
+//This is an event that is fired automatically when a Proejct is created  
+// App\Project::created(function($project){
+//     App\Activity::create([
+//         'project_id'=> $project->id,
+//         'description'=> 'created'
+//     ]);
+// });
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

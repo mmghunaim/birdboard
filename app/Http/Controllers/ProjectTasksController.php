@@ -33,7 +33,7 @@ class ProjectTasksController extends Controller
         $task->update(request()->validate(['body'=> 'required']));
 
         $method = request('completed') ? 'complete' : 'incomplete';
-
+        
         $task->$method();
 
         return redirect($project->path());
