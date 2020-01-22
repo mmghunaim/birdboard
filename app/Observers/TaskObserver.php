@@ -26,10 +26,10 @@ class TaskObserver
     public function updated(Task $task)
     {
         if (! $task->completed) {
-            return;
+            $task->project->createActivity('incompleted_task');
+        }else{
+            $task->project->createActivity('completed_task');
         }
-
-        $task->project->createActivity('completed_task');
     }
 
     /**

@@ -101,6 +101,19 @@ class ProjectTasksTest extends TestCase
     }
 
     /** @test **/
+    public function a_task_can_be_deleted()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
+        $task = $project->tasks[0];
+        $this->delete($task->path(), [
+            'body' => 'deleted'
+        ]);
+        $this->assertDatabaseMissing('tasks', [
+            'body'=> 'deleted'
+        ]);
+    }
+
+    /** @test **/
     public function a_task_can_be_completed()
     {
         $project = ProjectFactory::withTasks(1)->create();
