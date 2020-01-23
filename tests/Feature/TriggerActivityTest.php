@@ -66,6 +66,7 @@ class TriggertivitiesTest extends TestCase
             $this->assertEquals('created_task', $activities->description);
             $this->assertInstanceOf(Task::class, $activities->subject);
             $this->assertEquals('Task Created', $activities->subject->body);
+            $this->assertNull($activities->changes);
         });
 
         $this->assertEquals('created_task', $project->activities->last()->description);
@@ -81,7 +82,7 @@ class TriggertivitiesTest extends TestCase
             'completed'=> true
         ]);
 
-        $this->assertCount(4, $project->activities);
+        $this->assertCount(3, $project->activities);
         $this->assertEquals('completed_task', $project->activities->last()->description);
     }
 
@@ -99,7 +100,7 @@ class TriggertivitiesTest extends TestCase
             'completed' => true
         ]);
 
-        $this->assertCount(4, $project->activities);
+        $this->assertCount(3, $project->activities);
 
         $this->patch($task->path(), [
             'body' => 'foobar',
@@ -108,7 +109,7 @@ class TriggertivitiesTest extends TestCase
 
         $activities = $project->fresh()->activities;
 
-        $this->assertCount(5, $activities);
+        $this->assertCount(4, $activities);
 
         $this->assertEquals('incompleted_task', $activities->last()->description);   
     }

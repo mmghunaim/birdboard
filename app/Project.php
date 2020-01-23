@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use RecordsActivity;
     protected $fillable = ['title','description','owner_id','notes'];
 
     protected $guarded=[];
-
-    public $old = [];
 
     public function path()
     {
@@ -37,22 +36,6 @@ class Project extends Model
     public function activities()
     {
         return $this->hasMany(Activity::class)->latest();
-    }
-
-    public function createActivity($description)
-    {        
-        $this->activities()->create([
-            'description' => $description,
-            'changes' => $this->activityChnages($description)
-        ]);
-    }
-
-    public function activityChnages($description)
-    {
-        return $description === 'updated_project' ? [
-                'before' => array_diff($this->old, $this->getAttributes()),
-                'after' => $this->getChanges()
-            ] : null ;
     }
 
 }
