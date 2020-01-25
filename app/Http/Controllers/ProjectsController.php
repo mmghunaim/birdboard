@@ -10,7 +10,7 @@ class ProjectsController extends Controller
     public function index()
     {
         // $projects= Project::all();
-        $projects = auth()->user()->projects;
+        $projects = auth()->user()->allProjects();
         // ->skip(2)->take(3);
 
         return view('projects.index', ['projects'=> $projects]);
@@ -52,7 +52,7 @@ class ProjectsController extends Controller
     public function destroy(Project $project)
     {
         // $this->authorize('update', $project);
-        
+
         $project->delete();
 
         return redirect('/projects');
