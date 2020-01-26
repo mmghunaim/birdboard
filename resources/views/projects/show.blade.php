@@ -6,12 +6,24 @@
 
     <div class="flex justify-between w-full items-end">
 
-        <div class="text-gray-600">
+        <p class="text-gray-600 text-sm font-normal">
             <a href="/projects" class="no-underline text-gray-600 font-normal">My Projects</a> / {{ $project->title }}
-        </div>
+        </p>
 
-        <div>
-            <a href="{{ $project->path() . '/edit' }}" class="button">Edit Project</a>
+        <div class="flex items-center">
+            @foreach ($project->members as $member)
+                <img 
+                    src="{{ gravatar_url($member->email) }}"
+                    alt="{{ $member->name }}'s avatar"
+                    class="rounded-full w-8 mr-2">
+            @endforeach
+
+                <img 
+                    src="{{ gravatar_url($project->owner->email) }}?s=60"
+                    alt="{{ $project->owner->name }}'s avatar"
+                    class="rounded-full w-8 mr-2">
+
+            <a href="{{ $project->path() . '/edit' }}" class="button ml-4">Edit Project</a>
         </div>
 
     </div>
