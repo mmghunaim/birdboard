@@ -20,8 +20,18 @@ class InvitationsTest extends TestCase
         $project =  ProjectFactory::create();
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)
-            ->post(action('ProjectInvitationsController@store', $project))->assertStatus(403);
+        $assertInvitaionForbidden = function() use ($user, $project)
+        {
+            $this->actingAs($user)
+            ->post(action('ProjectInvitationsController@store', $project))
+            ->assertStatus(403);
+        };
+
+        $assertInvitaionForbidden();
+
+        $project->invite($user);
+
+        $assertInvitaionForbidden(); 
     }
 
     /** @test **/
@@ -52,7 +62,7 @@ class InvitationsTest extends TestCase
             ])
             ->assertSessionHasErrors([
                 'email' => 'The user you are inviting must have a Birdboard account.'
-            ]);
+            ], null, 'invitations');
     }
 
     /** @test **/

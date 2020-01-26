@@ -53,10 +53,10 @@
 
 </div>
 
-@if($errors->any())
+{{-- @if($errors->any())
     <div class="field mt-6 text-red-600">  
         @foreach($errors->all() as $error)
         <li>{{ $error }}</li>
         @endforeach
     </div>
-@endif
+@endif --}}

@@ -12,16 +12,16 @@
 
         <div class="flex items-center">
             @foreach ($project->members as $member)
-                <img 
-                    src="{{ gravatar_url($member->email) }}"
-                    alt="{{ $member->name }}'s avatar"
-                    class="rounded-full w-8 mr-2">
+            <img 
+            src="{{ gravatar_url($member->email) }}"
+            alt="{{ $member->name }}'s avatar"
+            class="rounded-full w-8 mr-2">
             @endforeach
 
-                <img 
-                    src="{{ gravatar_url($project->owner->email) }}?s=60"
-                    alt="{{ $project->owner->name }}'s avatar"
-                    class="rounded-full w-8 mr-2">
+            <img 
+            src="{{ gravatar_url($project->owner->email) }}?s=60"
+            alt="{{ $project->owner->name }}'s avatar"
+            class="rounded-full w-8 mr-2">
 
             <a href="{{ $project->path() . '/edit' }}" class="button ml-4">Edit Project</a>
         </div>
@@ -39,19 +39,19 @@
             <div class="mb-8">
                 <h2 class="text-gray-600 text-lg mb-3">Tasks</h2>
                 @foreach($project->tasks as $task)
-                    <div class="card mb-3">
-                        <form method="POST" action="{{ $task->path() }}">
-                            @method('PATCH')
-                            @csrf
-                            <div class="flex justify-between">
-                                <input type="text" name="body" class="w-full {{ $task->completed ? 'text-gray-600': ''}}"
-                                 value="{{ $task->body }}">
-                                <input type="checkbox" name="completed" onChange="this.form.submit()" 
-                                {{ $task->completed ? 'checked': '' }}>
-                            </div>
-                        </form>
-                        
-                    </div>
+                <div class="card mb-3">
+                    <form method="POST" action="{{ $task->path() }}">
+                        @method('PATCH')
+                        @csrf
+                        <div class="flex justify-between">
+                            <input type="text" name="body" class="w-full {{ $task->completed ? 'text-gray-600': ''}}"
+                            value="{{ $task->body }}">
+                            <input type="checkbox" name="completed" onChange="this.form.submit()" 
+                            {{ $task->completed ? 'checked': '' }}>
+                        </div>
+                    </form>
+
+                </div>
                 @endforeach
 
                 <form method="POST" action="{{ $project->path() .'/tasks' }}">
@@ -69,23 +69,28 @@
                     @csrf
 
                     <textarea 
-                        name="notes" 
-                        class="card w-full mb-4" 
-                        style="min-height: 200px" 
-                        placeholder="Anything special that you want to make a note of">
-                        {{ $project->notes }}
-                    </textarea>
-                    <button type="submit" class="button">Save</button>
-                </form>
-            </div>
-        </div>
+                    name="notes" 
+                    class="card w-full mb-4" 
+                    style="min-height: 200px" 
+                    placeholder="Anything special that you want to make a note of">
+                    {{ $project->notes }}
+                </textarea>
+                <button type="submit" class="button">Save</button>
+            </form>
 
-        <div class="lg:w-1/4 px-3">
-            @include('projects._card')
-            @include('projects.activity._activity')
+            @include('projects._errors')
         </div>
-
     </div>
+
+    <div class="lg:w-1/4 px-3">
+        @include('projects._card')
+        @include('projects.activity._activity')
+        @can ('manage', $project)
+            @include('projects._invite')
+        @endif
+    </div>
+
+</div>
 
 </main>
 

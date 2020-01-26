@@ -15,4 +15,9 @@ class ProjectPolicy
         //abort_if(auth()->user()->isNot($project->owner), 403); OR
         return $user->is($project->owner) || $project->members->contains($user);
     }
+
+    public function manage(User $user, Project $project)
+    {
+        return $user->is($project->owner);
+    }
 }
