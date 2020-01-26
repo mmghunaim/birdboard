@@ -87,7 +87,7 @@
         @include('projects.activity._activity')
         @can ('manage', $project)
             @include('projects._invite')
-        @endif
+        @endcan
     </div>
 
 </div>

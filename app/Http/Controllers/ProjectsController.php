@@ -51,12 +51,13 @@ class ProjectsController extends Controller
 
     public function destroy(Project $project)
     {
-        // $this->authorize('update', $project);
+        $this->authorize('manage', $project);
 
         $project->delete();
 
         return redirect('/projects');
     }
+
     public function validateRequest()
     {
         return request()->validate(
@@ -67,5 +68,4 @@ class ProjectsController extends Controller
             ]
         );
     }
-
 }

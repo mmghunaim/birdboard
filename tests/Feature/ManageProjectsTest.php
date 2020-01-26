@@ -23,11 +23,13 @@ class ManageProjectsTest extends TestCase
         $this->get('/projects/create')->assertRedirect('login');
         $this->get($project->path().'/edit')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
+        $this->delete($project->path())->assertRedirect('login');
     }
 
     /** @test **/
     public function a_user_can_create_a_project()
     {
+        $this->withoutExceptionHandling();
         $this->signIn();
 
         $this->get('projects/create')->assertStatus(200);
@@ -37,6 +39,7 @@ class ManageProjectsTest extends TestCase
             'description'=> $this->faker->sentence,
             'notes'=> 'General notes here.'
         ];
+        // $attributes= factory(Project::class)->raw(['owner_id' => auth()->id()]);
 
         // $project= auth()->user()->projects()->create(factory('App\Project')->raw());
         // $attributes= factory('App\\Project')->raw();
@@ -104,31 +107,39 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test **/
-    public function guests_cannot_delete_projects()
+    public function unauthorized_cannot_delete_projects()
     {
         $project = ProjectFactory::create();
 
-        $this->delete($project->path())
-            ->assertRedirect('login');
+        $this->signIn();
 
-        // $this->signIn();
+        $this->delete($project->path())->assertStatus(403);
+    }
 
-        // $this->delete($project->path())->assertStatus(403);
+    /** @test **/
+    public function a_invited_user_cannot_delete_the_project()
+    {
+        $project = ProjectFactory::create();
+        $user = factory('App\User')->create();
+
+        $project->invite($user);
+
+        $this->actingAs($user)
+            ->delete($project->path())
+            ->assertStatus(403);
     }
 
     /** @test **/
     public function a_user_can_delete_the_project()
     {
-        $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
 
-        $this->actingAs($this->signIn())
+        $this->actingAs($project->owner)
             ->delete($project->path())
             ->assertRedirect('/projects');
 
         $this->assertDatabaseMissing('projects', $project->only('id'));
     }
-
     
     /** @test **/
     public function a_user_can_view_their_project()
