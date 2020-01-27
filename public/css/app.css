@@ -642,11 +642,6 @@ h3 {
   font-weight: 500;
 }
 
-a {
-  color: #3182ce;
-  text-decoration: underline;
-}
-
 .button {
   background-color: var(--button-background-color);
   color: #fff;
@@ -669,19 +664,30 @@ a {
 }
 
 .theme-light {
-  --page-background-color: #F5F6F9;
+  --page-background-color: #f5f6f9;
   --card-background-color: white;
   --button-background-color: #47cdff;
   --header-background-color: white;
   --text-default-color: #222;
+  --text-accent-color: #47cdff;
+  --text-accent-light-color: #8ae2fe;
+  --text-muted-color: rgba(0, 0, 0, 0.3);
+  --text-muted-light-color: rgba(255, 255, 255, 0.1);
+  --text-muted-light-color: #e1e6e8;
+  --text-error-color: red;
 }
 
 .theme-dark {
-  --page-background-color: #17181E;
-  --card-background-color: #1F2027;
-  --button-background-color: #59B6F9;
-  --header-background-color: #1F2027;
+  --page-background-color: #17181e;
+  --card-background-color: #1f2027;
+  --button-background-color: #59b6f9;
+  --header-background-color: #1f2027;
   --text-default-color: #fff;
+  --text-muted-color: rgba(255, 255, 255, 0.5);
+  --text-muted-light-color: rgba(255, 255, 255, 0.3);
+  --text-accent-color: #47cdff;
+  --text-accent-light-color: #8ae2fe;
+  --text-error-color: red;
 }
 
 .sr-only {

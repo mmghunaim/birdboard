@@ -19,12 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="theme-dark bg-page " >
+<body class="theme-light bg-page " >
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-header ">
 
             <div class="container mx-auto">
-                <div class="flex justify-between itmes-center py-2">
+                <div class="flex justify-between items-center py-2">
                     <h1>
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="291" height="45" viewBox="0 0 291 45" class="text-default relative" style="top: 2px">
@@ -39,46 +39,43 @@
                         </a>
                     </h1>
 
-                    <div>
+                    <div class="flex items-center">
                         <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ml-auto list-disc text-default">
+                        <div class="navbar-nav ml-auto list-disc text-default flex justify-between">
                             <!-- Authentication Links -->
                             @guest
-
-                            <li class="nav-item">
-                                <a class="nav-link no-underline text-default" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+                            <a class="nav-link no-underline text-default" href="{{ route('login') }}">{{ __('Login') }}</a>
 
                             @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link no-underline text-default" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link no-underline text-default" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
                             @endif
 
                             @else
-                            <li class="nav-item dropdown list-none flex justify-between">
-
-                                <img 
-                                src="{{ gravatar_url(Auth::user()->email) }}?s=60"
-                                alt="{{ Auth::user()->name }}'s avatar"
-                                class="rounded-full w-8 mr-4">
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                    <a class="dropdown-item no-underline" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-
+                                <div class="flex items-center">
+                                    <button class="rounded-full w-5 h-5 bg-white border mr-2"></button>
+                                    <button class="rounded-full w-5 h-5 bg-black border mr-2"></button>
+                                    <button class="rounded-full w-5 h-5 bg-default border mr-2"></button>
                                 </div>
-                            </li>
+                                
+              
+                                <img 
+                                    src="{{ gravatar_url(Auth::user()->email) }}?s=60"
+                                    alt="{{ Auth::user()->name }}'s avatar"
+                                    class="rounded-full" width="35">
+
+                                <a class="flex items-center text-default no-underline text-sm mr-4 ml-4" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"
+                                    role="button"
+
+                                    >
+                                    {{ __('Logout') }}
+                                </a>
+                                
                         @endguest
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
