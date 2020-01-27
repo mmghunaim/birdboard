@@ -11,6 +11,8 @@ module.exports = {
     },
     colors: {
       transparent: 'transparent',
+      
+      default: 'var(--text-default-color)',
 
       black: '#000',
       white: '#fff',
@@ -147,7 +149,12 @@ module.exports = {
       '56': '14rem',
       '64': '16rem',
     },
-    backgroundColor: theme => theme('colors'),
+    backgroundColor: {
+        page: 'var(--page-background-color)',
+        card: 'var(--card-background-color)',
+        button: 'var(--button-background-color)',
+        header: 'var(--header-background-color)'
+      },
     backgroundPosition: {
       bottom: 'bottom',
       center: 'center',

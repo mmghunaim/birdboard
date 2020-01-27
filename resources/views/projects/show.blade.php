@@ -6,8 +6,8 @@
 
     <div class="flex justify-between w-full items-end">
 
-        <p class="text-gray-600 text-sm font-normal">
-            <a href="/projects" class="no-underline text-gray-600 font-normal">My Projects</a> / {{ $project->title }}
+        <p class="text-default text-sm font-normal">
+            <a href="/projects" class="no-underline text-default font-normal">My Projects</a> / {{ $project->title }}
         </p>
 
         <div class="flex items-center">
@@ -37,14 +37,15 @@
         <div class="lg:w-3/4 px-3 mb-6">
             {{-- tasks --}}
             <div class="mb-8">
-                <h2 class="text-gray-600 text-lg mb-3">Tasks</h2>
+                <h2 class="text-default text-lg mb-3">Tasks</h2>
+
                 @foreach($project->tasks as $task)
                 <div class="card mb-3">
                     <form method="POST" action="{{ $task->path() }}">
                         @method('PATCH')
                         @csrf
                         <div class="flex justify-between">
-                            <input type="text" name="body" class="w-full {{ $task->completed ? 'text-gray-600': ''}}"
+                            <input type="text" name="body" class="bg-card text-default w-full {{ $task->completed ? 'text-default': ''}}"
                             value="{{ $task->body }}">
                             <input type="checkbox" name="completed" onChange="this.form.submit()" 
                             {{ $task->completed ? 'checked': '' }}>
@@ -57,24 +58,24 @@
                 <form method="POST" action="{{ $project->path() .'/tasks' }}">
                     @csrf
                     <div class="card">
-                        <input type="text" name="body" placeholder="Add tasks now..." class="w-full">
+                        <input type="text" name="body" placeholder="Add tasks now..." class="bg-card text-default w-full">
                     </div>
                 </form>
             </div>
             {{--general notes--}}
             <div>
-                <h2 class="text-gray-600 text-lg mb-3" >General Notes</h2>
+                <h2 class="text-default text-lg mb-3" >General Notes</h2>
                 <form method="POST" action="{{ $project->path() }}">
                     @method('PATCH')
                     @csrf
 
                     <textarea 
-                    name="notes" 
-                    class="card w-full mb-4" 
-                    style="min-height: 200px" 
-                    placeholder="Anything special that you want to make a note of">
-                    {{ $project->notes }}
-                </textarea>
+                        name="notes" 
+                        class="card w-full mb-4 text-default" 
+                        style="min-height: 200px" 
+                        placeholder="Anything special that you want to make a note of">
+                        {{ $project->notes }}
+                    </textarea>
                 <button type="submit" class="button">Save</button>
             </form>
 

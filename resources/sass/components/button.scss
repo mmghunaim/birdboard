@@ -1,0 +1,10 @@
+.button {
+    @apply bg-button;
+    @apply text-white;
+    @apply no-underline;
+    @apply rounded-lg;
+    @apply text-sm;
+    @apply py-2;
+    @apply px-5;
+    box-shadow: 0 2px 7px 0 #b0eaff;
+}
