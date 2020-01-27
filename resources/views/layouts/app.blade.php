@@ -44,8 +44,7 @@
                         <div class="navbar-nav ml-auto list-disc text-default flex justify-between">
                             <!-- Authentication Links -->
                             @guest
-                            <a class="nav-link no-underline text-default" href="{{ route('login') }}">{{ __('Login') }}</a>
-
+                            <a class="nav-link no-underline text-default" href="{{ route('login') }}">{{ __('Login') }}</a>theme-switcher
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link no-underline text-default" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -53,12 +52,7 @@
                             @endif
 
                             @else
-                                <div class="flex items-center">
-                                    <button class="rounded-full w-5 h-5 bg-white border mr-2"></button>
-                                    <button class="rounded-full w-5 h-5 bg-black border mr-2"></button>
-                                    <button class="rounded-full w-5 h-5 bg-default border mr-2"></button>
-                                </div>
-                                
+                                <theme-switcher></theme-switcher>
               
                                 <img 
                                     src="{{ gravatar_url(Auth::user()->email) }}?s=60"
@@ -73,7 +67,7 @@
                                     >
                                     {{ __('Logout') }}
                                 </a>
-                                
+
                         @endguest
                     </div>
                 </div>
