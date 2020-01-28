@@ -2020,7 +2020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: '',
         description: '',
         tasks: [{
-          value: ''
+          body: ''
         }]
       },
       errors: {}
@@ -2029,7 +2029,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     addTask: function addTask() {
       this.form.tasks.push({
-        value: ''
+        body: ''
       });
     },
     createProject: function () {
@@ -38238,6 +38238,7 @@ var render = function() {
   return _c(
     "modal",
     {
+      staticClass: "text-default",
       attrs: {
         name: "create-project",
         classes: "p-12 bg-card rounded-lg",
@@ -38281,7 +38282,8 @@ var render = function() {
                       expression: "form.title"
                     }
                   ],
-                  staticClass: "border p-2 text-xs block w-full rounded",
+                  staticClass:
+                    "border p-2 text-xs block w-full rounded bg-card text-default",
                   class: _vm.errors.title
                     ? "border-error"
                     : "border-muted-light",
@@ -38324,7 +38326,8 @@ var render = function() {
                       expression: "form.description"
                     }
                   ],
-                  staticClass: "border p-2 text-xs block w-full rounded",
+                  staticClass:
+                    "border p-2 text-xs block w-full rounded bg-card text-default",
                   class: _vm.errors.description
                     ? "border-error"
                     : "border-muted-light",
@@ -38366,20 +38369,20 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: task.value,
-                          expression: "task.value"
+                          value: task.body,
+                          expression: "task.body"
                         }
                       ],
                       staticClass:
-                        "border border-muted-light mb-3 p-2 text-xs block w-full rounded",
+                        "border border-muted-light mb-3 p-2 text-xs block w-full rounded text-default bg-card",
                       attrs: { type: "text", placeholder: "Task 1" },
-                      domProps: { value: task.value },
+                      domProps: { value: task.body },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(task, "value", $event.target.value)
+                          _vm.$set(task, "body", $event.target.value)
                         }
                       }
                     })
@@ -38460,7 +38463,9 @@ var render = function() {
               [_vm._v("Cancel")]
             ),
             _vm._v(" "),
-            _c("button", { staticClass: "button" }, [_vm._v("Create Project")])
+            _c("button", { staticClass: "button", attrs: { type: "submit" } }, [
+              _vm._v("Create Project")
+            ])
           ])
         ]
       )

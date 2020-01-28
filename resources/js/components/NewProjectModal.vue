@@ -1,5 +1,5 @@
 <template>
-    <modal name="create-project" classes="p-12 bg-card rounded-lg" height="auto">
+    <modal name="create-project" classes="p-12 bg-card rounded-lg" height="auto" class="text-default">
       <form @submit.prevent="createProject">
         <h1 class="font-normal mb-16 text-center text-2xl">Let's begin by create a project</h1>
 
@@ -10,7 +10,7 @@
                   <input 
                     type="text" 
                     id="title"
-                    class="border p-2 text-xs block w-full rounded"
+                    class="border p-2 text-xs block w-full rounded bg-card text-default"
                     :class= "errors.title ? 'border-error' : 'border-muted-light' " 
                     v-model="form.title">
                   <span class="text-xs text-italic text-error" v-if="errors.title" v-text="errors.title[0]"></span>
@@ -20,7 +20,7 @@
                   <label for="description" class="text-sm block mb-2">Description</label>
                   <textarea 
                     id="description"
-                    class="border p-2 text-xs block w-full rounded"
+                    class="border p-2 text-xs block w-full rounded bg-card text-default"
                     :class= "errors.description ? 'border-error' : 'border-muted-light'"
                     rows="8" 
                     v-model="form.description"></textarea>
@@ -32,10 +32,10 @@
               <div class="mb-4">
                   <label class="text-sm block mb-2">Add Some Tasks</label>
                   <input type="text" 
-                    class="border border-muted-light mb-3 p-2 text-xs block w-full rounded" 
+                    class="border border-muted-light mb-3 p-2 text-xs block w-full rounded text-default bg-card" 
                     placeholder="Task 1"
                     v-for="task in form.tasks"
-                    v-model= "task.value">
+                    v-model= "task.body">
               </div>
 
               <button type="button" class="inline-flex items-center text-xs" @click="addTask">
@@ -53,7 +53,7 @@
 
         <footer class="flex justify-end">
           <button type="button" class="button is-outlined mr-4" @click="$modal.hide('create-project')">Cancel</button>
-          <button class="button">Create Project</button>
+          <button type="submit" class="button">Create Project</button>
         </footer>
       </form>
     </modal>
@@ -68,7 +68,7 @@
             title: '',
             description: '',
             tasks: [
-              { value: ''}  
+              { body: ''}  
             ]
           },
 
@@ -78,7 +78,7 @@
 
       methods: {
         addTask(){
-            this.form.tasks.push({ value: '' });
+            this.form.tasks.push({ body: '' });
         },
 
         async createProject(){

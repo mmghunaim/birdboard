@@ -7,7 +7,7 @@
 
         <input 
             type="text" 
-            class="input bg-transparent border border-grey-600 rounded p-2 text-xs w-full" 
+            class="input bg-transparent border border-grey-600 rounded p-2 text-xs w-full bg-card " 
             name="title"    
             placeholder="Hmmmm"
             value="{{ $project->title }}" 
@@ -25,7 +25,7 @@
     <div class="control">
 
         <textarea 
-            class="input bg-transparent border border-grey-600 rounded p-2 text-xs w-full h-40" 
+            class="input bg-transparent border border-grey-600 rounded p-2 text-xs w-full h-40 bg-card"  
             name="description" 
             placeholder="Feel free to type your description here."
             required

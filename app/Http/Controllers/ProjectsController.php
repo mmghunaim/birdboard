@@ -34,6 +34,13 @@ class ProjectsController extends Controller
         // dd($attributes);
         // $attributes['owner_id'] = auth()->id();
         $project= auth()->user()->projects()->create($this->validateRequest());
+
+        if (request()->has('tasks')) {
+            if (null !== request('tasks')[0]['body']) {
+                $project->addTasks(request('tasks'));
+            }
+        }
+
         if (request()->wantsJson()) {
             return ['message' => $project->path()];
         }
@@ -61,13 +68,13 @@ class ProjectsController extends Controller
         return redirect('/projects');
     }
 
-    public function validateRequest()
+    protected function validateRequest()
     {
         return request()->validate(
             [
                 'title'=>'sometimes|required',
-                'description'=> 'sometimes|required|max:80',
-                'notes'=>'nullable|max:255'
+                'description'=> 'sometimes|required',
+                'notes'=>'nullable'
             ]
         );
     }
