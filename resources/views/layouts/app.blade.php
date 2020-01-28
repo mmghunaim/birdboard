@@ -41,10 +41,11 @@
 
                     <div class="flex items-center">
                         <!-- Right Side Of Navbar -->
-                        <div class="navbar-nav ml-auto list-disc text-default flex justify-between">
+                        
+                        <div class="navbar-nav ml-auto list-none text-default flex justify-between">
                             <!-- Authentication Links -->
                             @guest
-                            <a class="nav-link no-underline text-default" href="{{ route('login') }}">{{ __('Login') }}</a>theme-switcher
+                            <a class="nav-link no-underline text-default mr-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link no-underline text-default" href="{{ route('register') }}">{{ __('Register') }}</a>
