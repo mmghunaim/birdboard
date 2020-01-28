@@ -1946,6 +1946,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _FormBuilder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormBuilder */ "./resources/js/components/FormBuilder.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2013,17 +2014,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      form: {
+      form: new _FormBuilder__WEBPACK_IMPORTED_MODULE_1__["default"]({
         title: '',
         description: '',
         tasks: [{
           body: ''
         }]
-      },
-      errors: {}
+      })
     };
   },
   methods: {
@@ -2040,26 +2041,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.post('/projects', this.form);
+                if (!this.form.tasks[0].body) {
+                  delete this.form.originalData.tasks;
+                }
 
-              case 3:
-                location = _context.sent.data.message;
-                _context.next = 9;
-                break;
+                this.form.submit('/projects').then(function (response) {
+                  return location = response.data.message;
+                }); // try{
+                //   location = (await axios.post('/projects', this.form)).data.message;
+                // }catch (error){
+                //   this.errors = error.response.data.errors;
+                // }
 
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](0);
-                this.errors = _context.t0.response.data.errors;
-
-              case 9:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 6]]);
+        }, _callee, this);
       }));
 
       function createProject() {
@@ -38284,7 +38283,7 @@ var render = function() {
                   ],
                   staticClass:
                     "border p-2 text-xs block w-full rounded bg-card text-default",
-                  class: _vm.errors.title
+                  class: _vm.form.errors.title
                     ? "border-error"
                     : "border-muted-light",
                   attrs: { type: "text", id: "title" },
@@ -38299,10 +38298,12 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.title
+                _vm.form.errors.title
                   ? _c("span", {
                       staticClass: "text-xs text-italic text-error",
-                      domProps: { textContent: _vm._s(_vm.errors.title[0]) }
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.title[0])
+                      }
                     })
                   : _vm._e()
               ]),
@@ -38328,7 +38329,7 @@ var render = function() {
                   ],
                   staticClass:
                     "border p-2 text-xs block w-full rounded bg-card text-default",
-                  class: _vm.errors.description
+                  class: _vm.form.errors.description
                     ? "border-error"
                     : "border-muted-light",
                   attrs: { id: "description", rows: "8" },
@@ -38343,11 +38344,11 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.description
+                _vm.form.errors.description
                   ? _c("span", {
                       staticClass: "text-xs text-italic text-error",
                       domProps: {
-                        textContent: _vm._s(_vm.errors.description[0])
+                        textContent: _vm._s(_vm.form.errors.description[0])
                       }
                     })
                   : _vm._e()
@@ -50764,6 +50765,85 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/FormBuilder.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/FormBuilder.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var FormBuilder =
+/*#__PURE__*/
+function () {
+  function FormBuilder(data) {
+    _classCallCheck(this, FormBuilder);
+
+    this.originalData = {}; //shallow merge
+
+    Object.assign(this.originalData, data); //deep merge
+
+    this.originalData = JSON.parse(JSON.stringify(data));
+    Object.assign(this, data);
+    this.errors = {};
+    this.submitted = false;
+  }
+
+  _createClass(FormBuilder, [{
+    key: "data",
+    value: function data() {
+      var data = {};
+
+      for (var attribute in this.originalData) {
+        data[attribute] = this[originalData];
+      }
+
+      return data; // return Object.keys(this.originalData).reduce((data, attribute) => {
+      //     data[attribute] = this[originalData];
+      //     return data;
+      // }, {})
+    }
+  }, {
+    key: "submit",
+    value: function submit(endpoint) {
+      var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
+      return axios.requestType(endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this));
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.errors = error.response.data.errors;
+      this.submitted = false;
+      throw error;
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(response) {
+      this.submitted = true;
+      this.errors = {};
+      return response;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      Object.assign(this, this.originalData);
+    }
+  }]);
+
+  return FormBuilder;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (FormBuilder);
 
 /***/ }),
 
