@@ -1,0 +1,16 @@
+.dropdown-menu-link {
+    @apply block;
+    @apply text-default;
+    @apply no-underline;
+    
+    @apply text-sm;
+    @apply p-3;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.dropdown-toggle {
+    
+}

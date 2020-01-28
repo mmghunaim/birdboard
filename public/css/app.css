@@ -676,6 +676,18 @@ h3 {
   color: var(--text-default-color);
 }
 
+.dropdown-menu-link {
+  display: block;
+  color: var(--text-default-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.75rem;
+}
+
+.dropdown-menu-link:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .theme-light {
   --page-background-color: #f5f6f9;
   --card-background-color: white;
