@@ -26,7 +26,7 @@
             <div class="container mx-auto">
                 <div class="flex justify-between items-center py-2">
                     <h1>
-                        <a class="navbar-brand" href="{{ url('/') }}">
+                        <a class="navbar-brand"  href="{{ url('/') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="291" height="45" viewBox="0 0 291 45" class="text-default relative" style="top: 2px">
                                 <g fill="none" fill-rule="evenodd">
                                     <g class="fill-current">
@@ -45,10 +45,10 @@
                         <div class="navbar-nav ml-auto list-none text-default flex justify-between">
                             <!-- Authentication Links -->
                             @guest
-                            <a class="nav-link no-underline text-default mr-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link no-underline text-default mr-3 text-accent" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link no-underline text-default" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link no-underline text-default text-accent" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
 
