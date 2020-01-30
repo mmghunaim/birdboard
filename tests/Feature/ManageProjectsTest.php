@@ -104,7 +104,7 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_update_a_project_general_note()
     {
-        
+
         $project = ProjectFactory::create();
 
         $this->actingAs($project->owner)
@@ -157,7 +157,7 @@ class ManageProjectsTest extends TestCase
 
         $this->assertDatabaseMissing('projects', $project->only('id'));
     }
-    
+
     /** @test **/
     public function a_user_can_view_their_project()
     {
@@ -183,7 +183,7 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function an_authenticated_user_connot_update_the_projects_of_others()
     {
-        $this->signIn();
+//        $this->signIn();
 
         $project= factory('App\Project')->create();
 
