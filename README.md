@@ -1,4 +1,4 @@
-# Biradboard
+# Biradboard [![Build Status](https://travis-ci.com/mmghunaim/birdboard.svg?branch=master)](https://travis-ci.com/mmghunaim/birdboard)
 
 This is an open source project build by me with following Jeffrey Way
 
