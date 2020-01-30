@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectInvitationRequest;
+use App\Mail\SendInvitaion;
 use App\Project;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectInvitationsController extends Controller
 {
@@ -20,6 +22,8 @@ class ProjectInvitationsController extends Controller
         $user = User::whereEmail(request('email'))->first();
 
         $project->invite($user);
+
+//        Mail::to(request('email'))->send(new SendInvitaion($project));
 
         return redirect($project->path());
     }
