@@ -13,8 +13,8 @@ Begin by cloning this repository to your drive, and installing all Composer depe
 ```bash
 git clone https://github.com/mmghunaim/birdboard.git
 cd birdboard && composer install
-php artisan key:generate
 mv .env.example .env
+php artisan key:generate
 ```
 
 ### Step 2
@@ -28,8 +28,12 @@ DB_DATABASE=birdboard
 DB_USERNAME=root
 DB_PASSWORD=
 ```
-
 ### Step 3
+Create needed tables by run migration
+```php
+php artisan migrate
+```
+### Step 4
 Once finished, clear your server cache, and you're all set to go!
 ```$xslt
 php artisan cache:clear
