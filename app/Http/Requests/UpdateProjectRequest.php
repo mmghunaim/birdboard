@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Project;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class UpdateProjectRequest extends FormRequest
         return [
             'title'=>'sometimes|required',
             'description'=> 'sometimes|required|max:80',
-            'notes'=>'nullable|max:255'
+            'notes'=>'nullable|max:255',
         ];
     }
 
@@ -37,10 +37,9 @@ class UpdateProjectRequest extends FormRequest
         //when use the Route Model Binding
         //return $this->route('project');
 
-
         //if we won't use the Route Model Binding
         //we must manual search the project and return it
-        return Project::findOrFail($this->route('project'));  
+        return Project::findOrFail($this->route('project'));
     }
 
     public function save()
@@ -53,9 +52,5 @@ class UpdateProjectRequest extends FormRequest
 
         //OR using Laravel Higher Order Tap Proxy
         return tap($this->project())->update($this->validated());
-        
     }
-
-    
-
 }

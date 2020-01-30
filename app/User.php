@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Project;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -47,7 +45,7 @@ class User extends Authenticatable
     public function allProjects()
     {
         return Project::where('owner_id', $this->id)
-            ->orWhereHas('members', function($query){
+            ->orWhereHas('members', function ($query) {
                 $query->where('user_id', $this->id);
             })
             ->get();

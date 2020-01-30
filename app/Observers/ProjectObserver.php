@@ -38,5 +38,4 @@ class ProjectObserver
     // {
     //     $project->createActivity('updated_project');
     // }
-
 }

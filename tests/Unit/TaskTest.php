@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 // use PHPUnit\Framework\TestCase;
 use App\Project;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
@@ -14,9 +14,8 @@ class TaskTest extends TestCase
     /** @test **/
     public function a_task_belongs_to_a_project()
     {
-        $task= factory('App\Task')->create();
+        $task = factory('App\Task')->create();
         $this->assertInstanceOf(Project::class, $task->project);
-
     }
 
     /** @test **/
@@ -32,17 +31,17 @@ class TaskTest extends TestCase
         //     '/projects/' . $task->project_id . '/tasks/' . $task->id , $task->path()
         // );
 
-        $task= factory('App\Task')->create();
+        $task = factory('App\Task')->create();
 
         $this->assertEquals(
-            '/projects/' . $task->project->id . '/tasks/' . $task->id , $task->path()
+            '/projects/'.$task->project->id.'/tasks/'.$task->id, $task->path()
         );
     }
 
     /** @test **/
     public function a_task_can_be_complete()
     {
-        $task= factory('App\Task')->create();
+        $task = factory('App\Task')->create();
 
         $this->assertFalse($task->completed);
 
@@ -54,7 +53,7 @@ class TaskTest extends TestCase
     /** @test **/
     public function a_task_can_be_incomplete()
     {
-        $task= factory('App\Task')->create(['completed'=>true]);
+        $task = factory('App\Task')->create(['completed'=>true]);
 
         $this->assertTrue($task->completed);
 

@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 // use PHPUnit\Framework\TestCase;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
@@ -14,9 +14,9 @@ class ProjectTest extends TestCase
     public function it_has_a_path()
     {
         // $this->withoutExceptionHandling();
-        $project= factory('App\\Project')->create();
+        $project = factory('App\\Project')->create();
 
-        $this->assertEquals('/projects/' . $project->id, $project->path());
+        $this->assertEquals('/projects/'.$project->id, $project->path());
     }
 
     /** @test **/
@@ -34,17 +34,16 @@ class ProjectTest extends TestCase
 
         $project = factory('App\Project')->create();
 
-        $task= $project->addTask('Test Task');
+        $task = $project->addTask('Test Task');
 
         $this->assertTrue($project->tasks->contains($task));
-
     }
 
     /** @test **/
     public function it_can_invite_a_user()
     {
         $this->withoutExceptionHandling();
-        
+
         $project = factory('App\Project')->create();
 
         $project->invite($user = factory('App\User')->create());

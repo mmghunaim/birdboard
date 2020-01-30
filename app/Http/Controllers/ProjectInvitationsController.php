@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Project;
-use Illuminate\Http\Request;
 use App\Http\Requests\ProjectInvitationRequest;
+use App\Project;
+use App\User;
+use Illuminate\Http\Request;
 
 class ProjectInvitationsController extends Controller
 {
-    public function store(Project $project,  ProjectInvitationRequest $request)
+    public function store(Project $project, ProjectInvitationRequest $request)
     {
         //TODO
-        //if a user invite another user with no account in birdboard, 
+        //if a user invite another user with no account in birdboard,
         //we will fire an email with invitaion ... for more details back to ep33
 
         // $user = User::whereEmail(request('email'));

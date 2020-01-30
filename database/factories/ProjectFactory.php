@@ -2,7 +2,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-
 use App\Project;
 use Faker\Generator as Faker;
 
@@ -11,7 +10,6 @@ $factory->define(Project::class, function (Faker $faker) {
         'title'=> $faker->sentence(4),
         'description'=> $faker->paragraph(4),
         'notes' => 'Foobar',
-        'owner_id'=>factory(App\User::class)
+        'owner_id'=>factory(App\User::class),
     ];
-
 });
