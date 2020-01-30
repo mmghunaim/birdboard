@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateProjectRequest;
+
 class ProjectsController extends Controller
 {
     public function index()
@@ -20,7 +21,8 @@ class ProjectsController extends Controller
     {
         // abort_if(auth()->user()->isNot($project->owner), 403);
         $this->authorize('update', $project);
-        return view('projects.show',['project'=> $project]);
+
+        return view('projects.show', ['project'=> $project]);
     }
 
     public function create()
@@ -33,7 +35,7 @@ class ProjectsController extends Controller
         // $attributes= $this->validateRequest();
         // dd($attributes);
         // $attributes['owner_id'] = auth()->id();
-        $project= auth()->user()->projects()->create($this->validateRequest());
+        $project = auth()->user()->projects()->create($this->validateRequest());
 
         if (request()->has('tasks')) {
             if (null !== request('tasks')[0]['body']) {
@@ -44,6 +46,7 @@ class ProjectsController extends Controller
         if (request()->wantsJson()) {
             return ['message' => $project->path()];
         }
+
         return redirect($project->path());
     }
 
@@ -74,7 +77,7 @@ class ProjectsController extends Controller
             [
                 'title'=>'sometimes|required',
                 'description'=> 'sometimes|required',
-                'notes'=>'nullable'
+                'notes'=>'nullable',
             ]
         );
     }

@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 trait RecordsActivity
 {
     /**
-     * The project's old attributes
+     * The project's old attributes.
      *
      * @var array
      */
@@ -19,12 +19,12 @@ trait RecordsActivity
     public static function bootRecordsActivity()
     {
         foreach (self::recordableEvents() as $event) {
-            static::$event(function ($model) use ($event){
+            static::$event(function ($model) use ($event) {
                 $model->createActivity($model->activityDescription($event));
             });
 
             if ($event === 'updated') {
-                static::updating(function($model){
+                static::updating(function ($model) {
                     $model->old = $model->getOriginal();
                 });
             }
@@ -32,13 +32,13 @@ trait RecordsActivity
     }
 
     /**
-     * The project's old attributes
+     * The project's old attributes.
      *
-     * @var string $description
+     * @var string
      */
     protected function activityDescription($description)
     {
-        return "{$description}_" . strtolower(class_basename($this));
+        return "{$description}_".strtolower(class_basename($this));
     }
 
     /**
@@ -51,6 +51,7 @@ trait RecordsActivity
         if (isset(static::$recordableEvents)) {
             return $recordableEvents = static::$recordableEvents;
         }
+
         return $recordableEvents = ['created', 'updated'];
     }
 
@@ -60,12 +61,12 @@ trait RecordsActivity
      * @param string $description
      */
     public function createActivity($description)
-    {        
+    {
         $this->activities()->create([
             'user_id' => ($this->project ?? $this)->owner->id,
             'description' => $description,
             'changes' => $this->activityChnages(),
-            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id
+            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
         ]);
     }
 
@@ -76,12 +77,11 @@ trait RecordsActivity
      */
     public function activityChnages()
     {
-        if ($this->wasChanged()){
+        if ($this->wasChanged()) {
             return [
                 'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
-                'after' => Arr::except($this->getChanges(), 'updated_at')
+                'after' => Arr::except($this->getChanges(), 'updated_at'),
             ];
         }
     }
-
 }

@@ -1,15 +1,14 @@
 <?php
 
 namespace Tests\Unit;
-use App\User;
-use Tests\TestCase;
+
 use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class Activity extends TestCase
 {
     use RefreshDatabase;
-    
 
     /** @test **/
     public function activity_has_a_user()

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Facades\Tests\Setup\ProjectFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class ProjectTasksTest extends TestCase
 {
@@ -15,17 +15,18 @@ class ProjectTasksTest extends TestCase
     public function guests_connot_add_tasks_to_projects()
     {
         $project = factory('App\Project')->create();
-        $this->post($project->path() . '/tasks', ['body'=> 'Task Test'])->assertRedirect('login');
+        $this->post($project->path().'/tasks', ['body'=> 'Task Test'])->assertRedirect('login');
     }
+
     /** @test **/
     public function only_the_owner_of_the_project_may_add_tasks()
     {
         $this->signIn();
         $project = factory('App\Project')->create();
-        $this->post($project->path() . '/tasks', ['body'=>'Test Task'])
+        $this->post($project->path().'/tasks', ['body'=>'Test Task'])
         ->assertStatus(403);
 
-        $this->assertDatabaseMissing('tasks',['body'=> 'Test Task']);
+        $this->assertDatabaseMissing('tasks', ['body'=> 'Test Task']);
     }
 
     /** @test **/
@@ -47,7 +48,7 @@ class ProjectTasksTest extends TestCase
         $this->patch($project->tasks->first()->path(),
             [
                 'body'=>'changed',
-                'completed'=> true
+                'completed'=> true,
             ])->assertStatus(403);
     }
 
@@ -60,12 +61,12 @@ class ProjectTasksTest extends TestCase
         // $project= auth()->user()->projects()
         // ->create(factory('App\Project')->raw());
 
-        //optimize it 
+        //optimize it
         $project = ProjectFactory::create();
         // $project = factory('App\Project')->create(['owner_id'=> auth()->id()]);
 
         $this->actingAs($project->owner)
-            ->post($project->path() . '/tasks', ['body'=> 'Task Test']);
+            ->post($project->path().'/tasks', ['body'=> 'Task Test']);
 
         // ->assertRedirect($project->path());
         $this->get($project->path())->assertSee('Task Test');
@@ -90,13 +91,13 @@ class ProjectTasksTest extends TestCase
         // $task= $project->addTask('test task');
 
         $this->actingAs($project->owner)
-        ->patch($project->tasks->first()->path(),[
-            'body'=>'changed'
+        ->patch($project->tasks->first()->path(), [
+            'body'=>'changed',
         ]);
 
         $this->assertDatabaseHas('tasks',
             [
-                'body'=>'changed'
+                'body'=>'changed',
             ]);
     }
 
@@ -106,10 +107,10 @@ class ProjectTasksTest extends TestCase
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
         $this->delete($task->path(), [
-            'body' => 'deleted'
+            'body' => 'deleted',
         ]);
         $this->assertDatabaseMissing('tasks', [
-            'body'=> 'deleted'
+            'body'=> 'deleted',
         ]);
     }
 
@@ -120,15 +121,15 @@ class ProjectTasksTest extends TestCase
         $project = ProjectFactory::withTasks(1)->create();
 
         $this->actingAs($project->owner)
-        ->patch($project->tasks->first()->path(),[
+        ->patch($project->tasks->first()->path(), [
             'body'=>'changed',
-            'completed'=> true
+            'completed'=> true,
         ]);
 
         $this->assertDatabaseHas('tasks',
             [
                 'body'=>'changed',
-                'completed'=>true
+                'completed'=>true,
             ]);
     }
 
@@ -138,21 +139,21 @@ class ProjectTasksTest extends TestCase
         $project = ProjectFactory::withTasks(1)->create();
 
         $this->actingAs($project->owner)
-        ->patch($project->tasks->first()->path(),[
+        ->patch($project->tasks->first()->path(), [
             'body'=>'changed',
-            'completed'=> true
+            'completed'=> true,
         ]);
 
         $this->actingAs($project->owner)
-        ->patch($project->tasks->first()->path(),[
+        ->patch($project->tasks->first()->path(), [
             'body'=>'changed',
-            'completed'=> false
+            'completed'=> false,
         ]);
 
         $this->assertDatabaseHas('tasks',
             [
                 'body'=>'changed',
-                'completed'=>false
+                'completed'=>false,
             ]);
     }
 
@@ -163,8 +164,6 @@ class ProjectTasksTest extends TestCase
 
         $attributes = factory('App\Task')->raw(['body'=>'']);
 
-        $this->actingAs($project->owner)->post($project->path() . '/tasks', $attributes)->assertSessionHasErrors('body');
+        $this->actingAs($project->owner)->post($project->path().'/tasks', $attributes)->assertSessionHasErrors('body');
     }
-    
-
 }

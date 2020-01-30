@@ -1,5 +1,6 @@
 <?php
-//This is an event that is fired automatically when a Proejct is created  
+
+//This is an event that is fired automatically when a Proejct is created
 // App\Project::created(function($project){
 //     App\Activity::create([
 //         'project_id'=> $project->id,
@@ -28,17 +29,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware'=> 'auth'], function(){
+Route::group(['middleware'=> 'auth'], function () {
 
     // Route::get('/projects', 'ProjectsController@index');
     // Route::get('/projects/create', 'ProjectsController@create');
     // Route::get('/projects/{project}', 'ProjectsController@show');
     // Route::get('/projects/{project}/edit', 'ProjectsController@edit');
     // Route::post('/projects', 'ProjectsController@store');
-    // Route::patch('/projects/{project}', 'ProjectsController@update'); 
+    // Route::patch('/projects/{project}', 'ProjectsController@update');
     // Route::delete('/projects/{project}', 'ProjectsController@destroy');
 
-    Route::resource('/projects', 'ProjectsController'); 
+    Route::resource('/projects', 'ProjectsController');
 
     Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
     Route::patch('/projects/{project}/tasks/{task}', 'ProjectTasksController@update');
@@ -47,10 +48,6 @@ Route::group(['middleware'=> 'auth'], function(){
     Route::post('/projects/{project}/invitations', 'ProjectInvitationsController@store');
 
     Route::get('/home', 'HomeController@index')->name('home');
-    
 });
 
-
-
 Auth::routes();
-

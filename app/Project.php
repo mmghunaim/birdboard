@@ -2,15 +2,14 @@
 
 namespace App;
 
-use App\Activity;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
     use RecordsActivity;
-    protected $fillable = ['title','description','owner_id','notes'];
+    protected $fillable = ['title', 'description', 'owner_id', 'notes'];
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function path()
     {
@@ -21,7 +20,6 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function tasks()
     {
@@ -52,5 +50,4 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class, 'project_members')->withTimestamps();
     }
-
 }

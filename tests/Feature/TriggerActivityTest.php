@@ -3,12 +3,11 @@
 namespace Tests\Feature;
 
 use App\Task;
-use Tests\TestCase;
 use Facades\Tests\Setup\ProjectFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class TriggertivitiesTest extends TestCase
+class TriggerActivityTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,14 +18,11 @@ class TriggertivitiesTest extends TestCase
 
         $this->assertCount(1, $project->activities);
 
-        tap($project->activities->last(), function($activities){
-
+        tap($project->activities->last(), function ($activities) {
             $this->assertEquals('created_project', $activities->description);
 
             $this->assertNull($activities->changes);
-
         });
-
     }
 
     /** @test **/
@@ -39,17 +35,15 @@ class TriggertivitiesTest extends TestCase
 
         $this->assertCount(2, $project->activities);
 
-        tap($project->activities->last(), function($activities) use($originalTitle){
-
+        tap($project->activities->last(), function ($activities) use ($originalTitle) {
             $this->assertEquals('updated_project', $activities->description);
 
             $expected = [
                 'before' => ['title'=> $originalTitle],
-                'after' => ['title' => 'changed']
+                'after' => ['title' => 'changed'],
             ];
 
             $this->assertEquals($expected, $activities->changes);
-
         });
     }
 
@@ -62,7 +56,7 @@ class TriggertivitiesTest extends TestCase
 
         $this->assertCount(2, $project->activities);
 
-        tap($task->activities->last(), function($activities){
+        tap($task->activities->last(), function ($activities) {
             $this->assertEquals('created_task', $activities->description);
             $this->assertInstanceOf(Task::class, $activities->subject);
             $this->assertEquals('Task Created', $activities->subject->body);
@@ -79,13 +73,12 @@ class TriggertivitiesTest extends TestCase
 
         $this->actingAs($project->owner)->patch($project->tasks[0]->path(), [
             'body'=> 'foobar',
-            'completed'=> true
+            'completed'=> true,
         ]);
 
         $this->assertCount(3, $project->activities);
         $this->assertEquals('completed_task', $project->activities->last()->description);
     }
-
 
     /** @test **/
     public function incompleting_a_task()
@@ -97,21 +90,21 @@ class TriggertivitiesTest extends TestCase
         $this->actingAs($project->owner)
         ->patch($task->path(), [
             'body' => 'foobar',
-            'completed' => true
+            'completed' => true,
         ]);
 
         $this->assertCount(3, $project->activities);
 
         $this->patch($task->path(), [
             'body' => 'foobar',
-            'completed' => false
+            'completed' => false,
         ]);
 
         $activities = $project->fresh()->activities;
 
         $this->assertCount(4, $activities);
 
-        $this->assertEquals('incompleted_task', $activities->last()->description);   
+        $this->assertEquals('incompleted_task', $activities->last()->description);
     }
 
     /** @test **/
@@ -129,8 +122,6 @@ class TriggertivitiesTest extends TestCase
 
         $task->delete();
 
-        $this->assertCount(3, $project->fresh()->activities);    
-
+        $this->assertCount(3, $project->fresh()->activities);
     }
-    
 }

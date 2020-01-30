@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -14,15 +13,15 @@ class Task extends Model
     protected $touches = ['project'];
 
     protected $casts = [
-        'completed' => 'boolean'
+        'completed' => 'boolean',
     ];
 
     protected static $recordableEvents = ['created', 'deleted'];
 
     // public static function boot()
     // {
-    //     parent::boot(); 
-    
+    //     parent::boot();
+
     //     static::created(function($task){
     //         App\Activity::create([
     //         'project_id'=> $task->project->id,
@@ -31,7 +30,8 @@ class Task extends Model
     //     });
     // }
 
-    protected function project(){
+    protected function project()
+    {
         return $this->belongsTo(Project::class);
     }
 
@@ -56,5 +56,4 @@ class Task extends Model
     {
         return $this->morphMany(Activity::class, 'subject')->latest();
     }
-
 }

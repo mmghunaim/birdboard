@@ -3,20 +3,19 @@
 namespace Tests\Feature;
 
 use App\Project;
-use Tests\TestCase;
 use Facades\Tests\Setup\ProjectFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class ManageProjectsTest extends TestCase
 {
     use WithFaker,RefreshDatabase;
 
-
     /** @test */
     public function guests_connot_manage_projects()
     {
-        $project= factory('App\Project')->create();
+        $project = factory('App\Project')->create();
 
         $this->post('/projects', $project->toArray())->assertRedirect('login');
         $this->get('/projects')->assertRedirect('login');
@@ -34,25 +33,25 @@ class ManageProjectsTest extends TestCase
 
         $this->get('projects/create')->assertStatus(200);
 
-        $attributes=[
+        $attributes = [
             'title'=> $this->faker->sentence,
             'description'=> $this->faker->sentence,
-            'notes'=> 'General notes here.'
+            'notes'=> 'General notes here.',
         ];
         // $attributes= factory(Project::class)->raw(['owner_id' => auth()->id()]);
 
         // $project= auth()->user()->projects()->create(factory('App\Project')->raw());
         // $attributes= factory('App\\Project')->raw();
 
-        $response= $this->post('/projects',$attributes);
+        $response = $this->post('/projects', $attributes);
 
-        $project= Project::where($attributes)->first();
+        $project = Project::where($attributes)->first();
 
         $response->assertRedirect($project->path());
 
         // $this->post('/projects',$project->toArray())->assertRedirect($project->path());
 
-        $this->assertDatabaseHas('projects',$attributes);
+        $this->assertDatabaseHas('projects', $attributes);
 
         // $this->get('/projects')->assertSee($project['title']);
         $this->get($project->path())
@@ -62,7 +61,7 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test */
-    function tasks_can_be_included_as_part_of_a_new_project_creation()
+    public function tasks_can_be_included_as_part_of_a_new_project_creation()
     {
         $this->signIn();
 
@@ -70,7 +69,7 @@ class ManageProjectsTest extends TestCase
 
         $attributes['tasks'] = [
             ['body' => 'Task 1'],
-            ['body' => 'Task 2']
+            ['body' => 'Task 2'],
         ];
 
         $this->post('/projects', $attributes);
@@ -94,7 +93,7 @@ class ManageProjectsTest extends TestCase
             ->patch($project->path(), $atts = [
                 'title'=> 'title changed',
                 'description'=> 'description changed',
-                'notes'=> 'new notes'
+                'notes'=> 'new notes',
             ])
             ->assertRedirect($project->path());
 
@@ -104,7 +103,6 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_update_a_project_general_note()
     {
-        
         $project = ProjectFactory::create();
 
         $this->actingAs($project->owner)
@@ -157,7 +155,7 @@ class ManageProjectsTest extends TestCase
 
         $this->assertDatabaseMissing('projects', $project->only('id'));
     }
-    
+
     /** @test **/
     public function a_user_can_view_their_project()
     {
@@ -175,7 +173,7 @@ class ManageProjectsTest extends TestCase
     {
         $this->signIn();
 
-        $project= factory('App\Project')->create();
+        $project = factory('App\Project')->create();
 
         $this->get($project->path())->assertStatus(403);
     }
@@ -185,20 +183,19 @@ class ManageProjectsTest extends TestCase
     {
         $this->signIn();
 
-        $project= factory('App\Project')->create();
+        $project = factory('App\Project')->create();
 
         $this->patch($project->path(), [])->assertStatus(403);
     }
-
 
     /** @test **/
     public function a_project_require_a_title()
     {
         $this->signIn();
 
-        $attributes= factory('App\\Project')->raw(['title'=>'']);
+        $attributes = factory('App\\Project')->raw(['title'=>'']);
 
-        $this->post('/projects',$attributes)->assertSessionHasErrors('title');
+        $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
 
     /** @test **/
@@ -206,10 +203,8 @@ class ManageProjectsTest extends TestCase
     {
         $this->signIn();
 
-        $attributes= factory('App\\Project')->raw(['description'=>'']);
+        $attributes = factory('App\\Project')->raw(['description'=>'']);
 
-        $this->post('/projects',$attributes)->assertSessionHasErrors('description');
+        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
-
-
 }

@@ -9,7 +9,7 @@ class Activity extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'changes'=> 'array'
+        'changes'=> 'array',
     ];
 
     public function subject()
