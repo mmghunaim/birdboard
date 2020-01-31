@@ -1,10 +1,5 @@
-class FormBuilder{
-    constructor(data){
-        this.originalData = {};
-        //shallow merge
-        Object.assign(this.originalData, data);
-
-        //deep merge
+class FormBuilder {
+    constructor(data) {
         this.originalData = JSON.parse(JSON.stringify(data));
 
         Object.assign(this, data);
@@ -13,40 +8,47 @@ class FormBuilder{
         this.submitted = false;
     }
 
-    data(){
-        let data = {};
+    data() {
+        return Object.keys(this.originalData).reduce((data, attribute) => {
+            data[attribute] = this[attribute];
 
-        for (let attribute in this.originalData) {
-            data[attribute] = this[originalData];
-        }
-        return data;
-
-        // return Object.keys(this.originalData).reduce((data, attribute) => {
-        //     data[attribute] = this[originalData];
-        //     return data;
-        // }, {})
+            return data;
+        }, {});
     }
 
-    submit(endpoint, requestType = 'post'){
-        return axios.requestType(endpoint, this.data())
-                    .catch(this.onFail.bind(this))
-                    .then(this.onSuccess.bind(this));
+    post(endpoint) {
+        return this.submit(endpoint);
     }
 
-    onFail(error){
-        this.errors = error.response.data.errors;
-        this.submitted = false;
-        throw error;
+    patch(endpoint) {
+        return this.submit(endpoint, 'patch');
     }
 
-    onSuccess(response){
+    delete(endpoint) {
+        return this.submit(endpoint, 'delete');
+    }
+
+    submit(endpoint, requestType = 'post') {
+        return axios[requestType](endpoint, this.data())
+            .catch(this.onFail.bind(this))
+            .then(this.onSuccess.bind(this));
+    }
+
+    onSuccess(response) {
         this.submitted = true;
         this.errors = {};
 
         return response;
     }
 
-    reset(){
+    onFail(error) {
+        this.errors = error.response.data.errors;
+        this.submitted = false;
+
+        throw error;
+    }
+
+    reset() {
         Object.assign(this, this.originalData);
     }
 }

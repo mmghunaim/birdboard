@@ -2073,6 +2073,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2106,11 +2111,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 this.form.submit('/projects').then(function (response) {
                   return location = response.data.message;
-                }); // try{
-                //   location = (await axios.post('/projects', this.form)).data.message;
-                // }catch (error){
-                //   this.errors = error.response.data.errors;
-                // }
+                });
 
               case 2:
               case "end":
@@ -3476,6 +3477,10 @@ var render = function() {
       }
     },
     [
+      _c("h1", { staticClass: "font-normal mb-16 text-center text-2xl" }, [
+        _vm._v("Let's begin by create a project")
+      ]),
+      _vm._v(" "),
       _c(
         "form",
         {
@@ -3487,10 +3492,6 @@ var render = function() {
           }
         },
         [
-          _c("h1", { staticClass: "font-normal mb-16 text-center text-2xl" }, [
-            _vm._v("Let's begin by create a project")
-          ]),
-          _vm._v(" "),
           _c("div", { staticClass: "flex" }, [
             _c("div", { staticClass: "flex-1 mr-4" }, [
               _c("div", { staticClass: "mb-4" }, [
@@ -3512,8 +3513,7 @@ var render = function() {
                       expression: "form.title"
                     }
                   ],
-                  staticClass:
-                    "border p-2 text-xs block w-full rounded bg-card text-default",
+                  staticClass: "border p-2 text-xs block w-full rounded",
                   class: _vm.form.errors.title
                     ? "border-error"
                     : "border-muted-light",
@@ -3531,7 +3531,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.form.errors.title
                   ? _c("span", {
-                      staticClass: "text-xs text-italic text-error",
+                      staticClass: "text-xs italic text-error",
                       domProps: {
                         textContent: _vm._s(_vm.form.errors.title[0])
                       }
@@ -3559,11 +3559,11 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "border p-2 text-xs block w-full rounded bg-card text-default",
+                    "border border-muted-light p-2 text-xs block w-full rounded",
                   class: _vm.form.errors.description
                     ? "border-error"
                     : "border-muted-light",
-                  attrs: { id: "description", rows: "8" },
+                  attrs: { id: "description", rows: "7" },
                   domProps: { value: _vm.form.description },
                   on: {
                     input: function($event) {
@@ -3577,7 +3577,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.form.errors.description
                   ? _c("span", {
-                      staticClass: "text-xs text-italic text-error",
+                      staticClass: "text-xs italic text-error",
                       domProps: {
                         textContent: _vm._s(_vm.form.errors.description[0])
                       }
@@ -3592,7 +3592,7 @@ var render = function() {
                 { staticClass: "mb-4" },
                 [
                   _c("label", { staticClass: "text-sm block mb-2" }, [
-                    _vm._v("Add Some Tasks")
+                    _vm._v("Need Some Tasks?")
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.form.tasks, function(task) {
@@ -3606,7 +3606,7 @@ var render = function() {
                         }
                       ],
                       staticClass:
-                        "border border-muted-light mb-3 p-2 text-xs block w-full rounded text-default bg-card",
+                        "border border-muted-light mb-2 p-2 text-xs block w-full rounded",
                       attrs: { type: "text", placeholder: "Task 1" },
                       domProps: { value: task.body },
                       on: {
@@ -3688,16 +3688,14 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.$modal.hide("create-project")
+                    return _vm.$modal.hide("new-project")
                   }
                 }
               },
               [_vm._v("Cancel")]
             ),
             _vm._v(" "),
-            _c("button", { staticClass: "button", attrs: { type: "submit" } }, [
-              _vm._v("Create Project")
-            ])
+            _c("button", { staticClass: "button" }, [_vm._v("Create Project")])
           ])
         ]
       )
@@ -15956,15 +15954,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!**********************************************!*\
   !*** ./resources/js/components/Dropdown.vue ***!
   \**********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dropdown.vue?vue&type=template&id=ef782e08& */ "./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08&");
 /* harmony import */ var _Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dropdown.vue?vue&type=script&lang=js& */ "./resources/js/components/Dropdown.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -15994,7 +15991,7 @@ component.options.__file = "resources/js/components/Dropdown.vue"
 /*!***********************************************************************!*\
   !*** ./resources/js/components/Dropdown.vue?vue&type=script&lang=js& ***!
   \***********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16043,10 +16040,6 @@ function () {
   function FormBuilder(data) {
     _classCallCheck(this, FormBuilder);
 
-    this.originalData = {}; //shallow merge
-
-    Object.assign(this.originalData, data); //deep merge
-
     this.originalData = JSON.parse(JSON.stringify(data));
     Object.assign(this, data);
     this.errors = {};
@@ -16056,29 +16049,33 @@ function () {
   _createClass(FormBuilder, [{
     key: "data",
     value: function data() {
-      var data = {};
+      var _this = this;
 
-      for (var attribute in this.originalData) {
-        data[attribute] = this[originalData];
-      }
-
-      return data; // return Object.keys(this.originalData).reduce((data, attribute) => {
-      //     data[attribute] = this[originalData];
-      //     return data;
-      // }, {})
+      return Object.keys(this.originalData).reduce(function (data, attribute) {
+        data[attribute] = _this[attribute];
+        return data;
+      }, {});
+    }
+  }, {
+    key: "post",
+    value: function post(endpoint) {
+      return this.submit(endpoint);
+    }
+  }, {
+    key: "patch",
+    value: function patch(endpoint) {
+      return this.submit(endpoint, 'patch');
+    }
+  }, {
+    key: "delete",
+    value: function _delete(endpoint) {
+      return this.submit(endpoint, 'delete');
     }
   }, {
     key: "submit",
     value: function submit(endpoint) {
       var requestType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'post';
-      return axios.requestType(endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this));
-    }
-  }, {
-    key: "onFail",
-    value: function onFail(error) {
-      this.errors = error.response.data.errors;
-      this.submitted = false;
-      throw error;
+      return axios[requestType](endpoint, this.data())["catch"](this.onFail.bind(this)).then(this.onSuccess.bind(this));
     }
   }, {
     key: "onSuccess",
@@ -16086,6 +16083,13 @@ function () {
       this.submitted = true;
       this.errors = {};
       return response;
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.errors = error.response.data.errors;
+      this.submitted = false;
+      throw error;
     }
   }, {
     key: "reset",
@@ -16257,8 +16261,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\hp\Desktop\Laravel\birdboard\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\hp\Desktop\Laravel\birdboard\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/mmghunaim/code/birdboard/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/mmghunaim/code/birdboard/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
