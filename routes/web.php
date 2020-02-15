@@ -25,6 +25,8 @@
 |
 */
 
+use App\Events\ProjectPublished;
+
 Route::get('/', function () {
     return view('welcome');
 });

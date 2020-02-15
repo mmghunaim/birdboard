@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProjectPublished;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProjectsController extends Controller
 {
@@ -42,6 +44,8 @@ class ProjectsController extends Controller
                 $project->addTasks(request('tasks'));
             }
         }
+
+        event(new ProjectPublished($project));
 
         if (request()->wantsJson()) {
             return ['message' => $project->path()];
