@@ -6,7 +6,6 @@ use App\Events\ProjectPublished;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 
 class ProjectsController extends Controller
 {
