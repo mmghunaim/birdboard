@@ -28,7 +28,6 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
 
         $this->get('projects/create')->assertStatus(200);
@@ -108,7 +107,7 @@ class ManageProjectsTest extends TestCase
         $this->actingAs($project->owner)
             ->patch($project->path(), $atts = ['notes'=> 'new notes']);
 
-        $this->assertDatabaseHas('projects', $atts);
+        $this->assertDatabaseMissingseHas('projects', $atts);
     }
 
     /** @test **/
