@@ -43,6 +43,7 @@ class Task extends Model
     public function complete()
     {
         $this->update(['completed' => true]);
+        $this->save();
         $this->createActivity('completed_task');
     }
 

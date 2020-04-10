@@ -107,7 +107,9 @@ class ManageProjectsTest extends TestCase
         $this->actingAs($project->owner)
             ->patch($project->path(), $atts = ['notes'=> 'new notes']);
 
-        $this->assertDatabaseMissingseHas('projects', $atts);
+        $project = Project::find(1);
+
+        $this->assertEquals('new notes', $project->notes);
     }
 
     /** @test **/
