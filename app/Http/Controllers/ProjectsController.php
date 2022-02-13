@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Events\ProjectPublished;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
-use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
